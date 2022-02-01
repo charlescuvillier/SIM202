@@ -8,7 +8,7 @@ float dist(float* v1, float* v2) //calcule la distance entre v1 et v2
     return(L);
 };
 
-Liste_Particule MAJ_forces(&Liste_Particule LP, epsilon) //maj des forces appliqués aux particules  (PENSER A CREER LA LISTE PARTICULE)
+Liste_Particules MAJ_forces(&Liste_Particules LP, epsilon) //maj des forces appliqués aux particules  (PENSER A CREER LA LISTE PARTICULE)
 {
     for (Particule part1 in LP)
     {
@@ -35,4 +35,32 @@ Liste_Particule MAJ_forces(&Liste_Particule LP, epsilon) //maj des forces appliq
 };
 
 
-Liste_particules MAJ_vitesse_un_demi(&Liste_Particule, float dt)
+Liste_Particules initialisationVitesse(&Liste_Particules LP, float dt)
+{
+    for (part in LP)
+    {
+        part_vitesse[1] += (dt*part_force[1])/(2*part_masse);
+        part_vitesse[2] += (dt*part_force[2])/(2*part_masse);
+        part_vitesse[3] += (dt*part_force[3])/(2*part_masse);
+    };
+};
+
+Liste_particules MAJ_pos(&Liste_Particules LP, float dt)
+{
+    for (part in LP)
+    {
+        part_position[1] += dt*part_vitesse[1];
+        part_position[2] += dt*part_vitesse[2];
+        part_position[3] += dt*part_vitesse[3];
+    };
+};
+
+Liste_Particules MAJ_vitesse(&Liste_Particules LP, float dt)
+{
+    for (part in LP)
+    {
+        part_vitesse[1] += dt*part_force[1]/part_mass;
+        part_vitesse[2] += dt*part_force[2]/part_mass;
+        part_vitesse[3] += dt*part_force[3]/part_mass;
+    };
+};
