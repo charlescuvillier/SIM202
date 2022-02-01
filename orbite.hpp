@@ -1,5 +1,6 @@
-//importer sqrt
-const G = 1;
+#include <cmath>
+const G = 6,674*10^(-15);
+
 
 float dist(float* v1, float* v2) //calcule la distance entre v1 et v2
 {
