@@ -1,15 +1,14 @@
-#include <cmath>
-const G = 6,674*10^(-15);
-
+#include <math.h>
+const float G = 6.334*pow(10,-15);
 
 float dist(float* v1, float* v2) //calcule la distance entre v1 et v2
 {
-    float L = (v2[1]-v1[1])**2+(v2[2]-v1[2])**2+(v2[3]-v1[3])**2;
-    float L = sqrt(L);
+    float L = pow((v2[1]-v1[1]),2)+pow((v2[2]-v1[2]),2)+pow((v2[3]-v1[3]),2);
+    float L = pow(L,1/2);
     return(L);
 };
 
-Liste_Particules MAJ_forces(&Liste_Particules LP, epsilon) //maj des forces appliqués aux particules  (PENSER A CREER LA LISTE PARTICULE)
+Liste_Particules MAJ_forces(&Liste_Particules LP, float epsilon) //maj des forces appliqués aux particules  (PENSER A CREER LA LISTE PARTICULE)
 {
     for (Particule part1 in LP)
     {
@@ -46,7 +45,7 @@ Liste_Particules initialisationVitesse(&Liste_Particules LP, float dt)
     };
 };
 
-Liste_particules MAJ_pos(&Liste_Particules LP, float dt)
+Liste_Particules MAJ_pos(&Liste_Particules LP, float dt)
 {
     for (part in LP)
     {
