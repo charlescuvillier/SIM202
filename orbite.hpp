@@ -3,7 +3,7 @@ const float G = 6.334*pow(10,-15);
 
 float dist(float* v1, float* v2) //calcule la distance entre v1 et v2
 {
-    float L = pow((v2[1]-v1[1]),2)+pow((v2[2]-v1[2]),2)+pow((v2[3]-v1[3]),2);
+    float L = pow((v2[1]-v1[1]),2)+pow((v2[2]-v1[2]),2)+pow((v2[0]-v1[0]),2);
     float L = pow(L,1/2);
     return(L);
 };
@@ -14,6 +14,7 @@ Liste_Particules MAJ_forces(&Liste_Particules LP, float epsilon) //maj des force
     {
         part1_force[1]=0;
         part1_force[2]=0;
+        part1_force[0]=0;
         for (Particule part2 in LP)
         {
             r=dist(part1_position, part2_position);
@@ -28,6 +29,7 @@ Liste_Particules MAJ_forces(&Liste_Particules LP, float epsilon) //maj des force
             };
             part1_force[1+]=norm*(part1_position[1]-part2_position[1]);
             part1_force[2]+=norm*(part1_position[2]-part2_position[2]);
+            part1_force[0]+=norm*(part1_position[0]-part2_position[0]);
         };
     };
 };
@@ -39,6 +41,7 @@ Liste_Particules initialisationVitesse(&Liste_Particules LP, float dt)
     {
         part_vitesse[1] += (dt*part_force[1])/(2*part_masse);
         part_vitesse[2] += (dt*part_force[2])/(2*part_masse);
+        part_vitesse[0] += (dt*part_force[0])/(2*part_masse);
     };
 };
 
@@ -48,6 +51,7 @@ Liste_Particules MAJ_pos(&Liste_Particules LP, float dt)
     {
         part_position[1] += dt*part_vitesse[1];
         part_position[2] += dt*part_vitesse[2];
+        part_position[0] += dt*part_vitesse[0];
     };
 };
 
@@ -57,5 +61,6 @@ Liste_Particules MAJ_vitesse(&Liste_Particules LP, float dt)
     {
         part_vitesse[1] += dt*part_force[1]/part_mass;
         part_vitesse[2] += dt*part_force[2]/part_mass;
+        part_vitesse[0] += dt*part_force[0]/part_mass;
     };
 };
