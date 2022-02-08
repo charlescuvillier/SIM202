@@ -12,17 +12,23 @@ using namespace std;
 
 class Particule{
     public :
-        vector<double> pos; //position instantanée de la particule
+        vector<double> position; //position instantanée de la particule
         vector<double> vitesse; //Vitesse instantanée de la particule
         vector<double> force; //Force gravitationnelle exercée sur la particule
+        double masse; //Masse de la particule
 
-        Particule(vector<double>& coord); //constructeur à partir de la position de la particule
-        Particule(vector<double> F); //constructeur à partir de la force exercée sur la particule
-        Particule(vector<double> v); //constructeur à partir de la vitesse de la particule
+        Particule(vector<double>& pos, double m); //constructeur à partir de la position de la particule
+        Particule(vector<double>& v, vector<double>& F); //constructeur à partir de la vitesse et de la force exercée sur la particule
 
-        ~Particule(); //destructeur 
 };
 
+//=================================================================================
+//                        class ListeParticule
+//=================================================================================
 
+class ListeParticule{
+    public : 
+        vector<Particule> Liste;
+};
 
 #endif
