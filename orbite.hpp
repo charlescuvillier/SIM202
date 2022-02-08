@@ -14,7 +14,6 @@ Liste_Particules MAJ_forces(&Liste_Particules LP, float epsilon) //maj des force
     {
         part1_force[1]=0;
         part1_force[2]=0;
-        part1_force[3]=0;
         for (Particule part2 in LP)
         {
             r=dist(part1_position, part2_position);
@@ -29,7 +28,6 @@ Liste_Particules MAJ_forces(&Liste_Particules LP, float epsilon) //maj des force
             };
             part1_force[1+]=norm*(part1_position[1]-part2_position[1]);
             part1_force[2]+=norm*(part1_position[2]-part2_position[2]);
-            part1_force[3]+=norm*(part1_position[3]-part2_position[3]);
         };
     };
 };
@@ -41,7 +39,6 @@ Liste_Particules initialisationVitesse(&Liste_Particules LP, float dt)
     {
         part_vitesse[1] += (dt*part_force[1])/(2*part_masse);
         part_vitesse[2] += (dt*part_force[2])/(2*part_masse);
-        part_vitesse[3] += (dt*part_force[3])/(2*part_masse);
     };
 };
 
@@ -51,7 +48,6 @@ Liste_Particules MAJ_pos(&Liste_Particules LP, float dt)
     {
         part_position[1] += dt*part_vitesse[1];
         part_position[2] += dt*part_vitesse[2];
-        part_position[3] += dt*part_vitesse[3];
     };
 };
 
@@ -61,6 +57,5 @@ Liste_Particules MAJ_vitesse(&Liste_Particules LP, float dt)
     {
         part_vitesse[1] += dt*part_force[1]/part_mass;
         part_vitesse[2] += dt*part_force[2]/part_mass;
-        part_vitesse[3] += dt*part_force[3]/part_mass;
     };
 };
