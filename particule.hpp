@@ -17,7 +17,8 @@ class Particule{
         vector<double> force; //Force gravitationnelle exercée sur la particule
         double masse; //Masse de la particule
 
-        Particule(vector<double>& pos, double m, vector<double> v=0, vector<double> F=0); //constructeur à partir des paramètres la position de la particule
+        Particule(vector<double>& pos, double m); //constructeur à partir des paramètres la position de la particule
+        Particule(vector<double> v, vector<double> F);
 };
 
 

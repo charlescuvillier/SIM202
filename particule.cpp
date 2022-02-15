@@ -1,12 +1,11 @@
 #include "particule.hpp"
 
-Particule::Particule(vector<double>& pos, double m, vector<double> v){
+Particule::Particule(vector<double>& pos, double m){
     this->position.resize(3);
     this->position = pos;
-    this->vitesse.resize(3);
-    this->vitesse = v;
-    this->force.resize(3,0);
     this->masse = m;
+    this->vitesse.resize(3,0);
+    this->force.resize(3,0);
 }
 
 Particule::Particule(vector<double>& v, vector<double>& F){
