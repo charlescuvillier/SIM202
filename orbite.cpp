@@ -10,11 +10,11 @@ double dist(vector<double> v1, vector<double> v2) //calcule la distance entre v1
 }
 
 
-Particule MAJ_forces(&Particule parti, float epsilon, float rayon, boite* B)
+Particule MAJ_forces(Particule& parti, float epsilon, float rayon, boite* B)
 {
     boite* A=B;
-    &Particule part = parti;
-    if(A.fille !=NULL && dist(boite.cdm-part.pos)<rayon )  //surcharger l'opérateur - pour des vecteurs !
+    Particule& part = parti;
+    if(A.fille !=NULL && dist(boite.cdm-part.position)<rayon )  //surcharger l'opérateur - pour des vecteurs !
     {
         boite* temp = A.fille;
         A = temp;
@@ -30,11 +30,11 @@ Particule MAJ_forces(&Particule parti, float epsilon, float rayon, boite* B)
         float norm = G*part1.mass*A.mass;
         if (r>epsilon)
         {
-            norm=-norm/(r**3); //a la place on divise par r cube et on multiplie par le vecteur u2-u1 non normé
+            norm=-norm/(pow(r,3)); //a la place on divise par r cube et on multiplie par le vecteur u2-u1 non normé
         }
         else
         {
-            norm=-norm/(epsilon**3);
+            norm=-norm/(pow(epsilon,3));
         }
         part.force[1]+=norm*(part.position[1]-A.cdm[1]);
         part.force[2]+=norm*(part.position[2]-A.cdm[2]);
