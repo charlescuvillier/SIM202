@@ -1,5 +1,6 @@
 #include <math.h>
 #include "particule.hpp"
+#include "Boite.hpp"
 const float G = 6.334*pow(10,-15);
 
 double dist(vector<double> v1, vector<double> v2) //calcule la distance entre v1 et v2
@@ -10,18 +11,18 @@ double dist(vector<double> v1, vector<double> v2) //calcule la distance entre v1
 }
 
 
-Particule MAJ_forces(Particule& parti, float epsilon, float rayon, boite* B)
+Particule MAJ_forces(Particule& parti, float epsilon, float rayon, Boite* B)
 {
-    boite* A=B;
+    Boite* A=B;
     Particule& part = parti;
-    if(A.fille !=NULL && dist(boite.cdm-part.position)<rayon )  //surcharger l'opérateur - pour des vecteurs !
+    if(A.fille !=NULL && dist(A.cdm-part.position)<rayon )  //surcharger l'opérateur - pour des vecteurs !
     {
-        boite* temp = A.fille;
+        Boite* temp = A.fille;
         A = temp;
         while(A!=NULL)
         {
             part = MAJ_forces(part, epsilon, A);
-            boite* tempsoeur= B.soeur;
+            Boite* tempsoeur= A.soeur;
             A= tempsoeur;
         }
     }
