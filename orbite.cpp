@@ -1,5 +1,5 @@
 #include <math.h>
-#include <particule.hpp>
+#include "particule.hpp"
 const float G = 6.334*pow(10,-15);
 
 double dist(vector<double> v1, vector<double> v2) //calcule la distance entre v1 et v2
@@ -43,6 +43,7 @@ Particule MAJ_forces(Particule& parti, float epsilon, float rayon, boite* B)
         //ici on rajoute la force du a la boite
 
     }
+    return(part); //on renvoie la particule avec ses forces mises à jour
 }
 
 
