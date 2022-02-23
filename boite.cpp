@@ -1,4 +1,4 @@
-#include 'boite.hpp'
+#include "boite.hpp"
 #include <vector>
 #include <iostream>
 using namespace std;
@@ -8,44 +8,34 @@ Boite::Boite(int niv, vector<double> centr, double taill){
     this->niveau = niv;
     this->centre = centr;
     this->masse = 0;
-    this->centre_masse= NULL;
+    this->centre_masse;
     this->taille = taill;
-    this->*particule = NULL;
-    this->*boite_fille=NULL;
-    this->*boite_soeur=NULL;
-    this->PointeurParticuleDansBoite = NULL;
+    this->particule=nullptr;
+    this->boite_fille=nullptr;
+    this->boite_soeur= nullptr ;
+    this->PointeurParticuleDansBoite;
 }
-
+/*
 Boite::Boite(int niv, vector<double> centr, double mass){
     this->niveau = niv;
     this->centre = centr;
     this->masse = mass;
-    this->centre_masse= NULL;
+    this->centre_masse;
     this->taille = 0;
-    this->*particule = NULL;
-    this->*boite_fille=NULL;
-    this->*boite_soeur=NULL;
-    this->PointeurParticuleDansBoite = NULL;
+    this->particule = nullptr;
+    this->boite_fille = nullptr;
+    this->boite_soeur = nullptr;
+    this->PointeurParticuleDansBoite;
 }
-
-Boite::Boite(int dim, double taille){
-	this->niveau = 0;
-	this->centre = Vector(3,0) ;
-	this->taille = taille;
-	this->masse = 0;
-	this->centre_masse= NULL;
-    this->*particule = NULL;
-    this->*boite_fille=NULL;
-    this->*boite_soeur=NULL;
-    this->PointeurParticuleDansBoite = NULL;
-}
+*/
 //destructeur
 Boite::~Boite(){
     delete boite_fille;
     delete boite_soeur;
-    delete particule;
-    delete sousBoites;
+    delete &PointeurParticuleDansBoite;
+    delete &sousBoites;
 }
+
 
 //constructeur de boite fille pour la boite courante
 void Boite::constructionBoiteFille()
@@ -55,30 +45,30 @@ void Boite::constructionBoiteFille()
 
 //savoir si la boite contient une particule P
 bool Boite::contient(const Particule& P) const
-{   vector<double> coin_1 = centre-taille;
-    vector<double> coin_2 = centre+taille;
-
-    return coin_1(1) <P.position && P.position < coin_2(1) && coin_1(2) <P.position && P.position < coin_2(2) && coin_1(3) <P.position && P.position < coin_2(3);
+{  for(int i =1; i<4;i++)
+        {
+        if (centre[i]-taille/2 > P.position[i] || P.position[i]<centre[i]+taille/2) return false;
+        }
+    return true;
 }
-
 //insertion de particule
-void Boite::insert(Particule* part){
-    if(!contient(part))
+void Boite::insertion(Particule* ppart){
+    if(!contient(*ppart))
         {//la particule n'est pas dans la boite
         return;
         }
     //on ajoute la particule
-    this->PointeurParticuleDansBoite.push_back(part);
+    PointeurParticuleDansBoite.push_back(ppart);
 }
 
 //subdivision d'une boite en 4 boites filles
 void Boite::subdivision(){
     //on cree d'abord la boite en haut a gauche devant
-    vector<double> nv_centre = vector(3,0.);
+    vector<double> nv_centre = vector<double>(3,0.);
     nv_centre[0] = centre[0]+taille/4;
     nv_centre[1] = centre[1]-taille/4;
     nv_centre[2] = centre[2]+taille/4;
-    sousBoites= vector(1,Boite(niveau+1, nv_centre,taille/2));
+    sousBoites= vector<Boite>(1,Boite(niveau+1, nv_centre,taille/2));
     //en haut a gauche derriere
     nv_centre[0] = centre[0]-taille/4;
     nv_centre[1] = centre[1]-taille/4;
@@ -98,7 +88,7 @@ void Boite::subdivision(){
     nv_centre[0] = centre[0]+taille/4;
     nv_centre[1] = centre[1]-taille/4;
     nv_centre[2] = centre[2]-taille/4;
-    sousBoites= vector(1,Boite(niveau+1, nv_centre,taille/2));
+    sousBoites= vector<Boite>(1,Boite(niveau+1, nv_centre,taille/2));
     //en bas a gauche derriere
     nv_centre[0] = centre[0]-taille/4;
     nv_centre[1] = centre[1]-taille/4;
@@ -116,13 +106,54 @@ void Boite::subdivision(){
     sousBoites.push_back(Boite(niveau+1, nv_centre,taille/2));
 }
 
-void Boite::generation(vector<*Particule> ListeParticule){
+void Boite::generation(vector<Particule*> ListepParticules){
     //fonction reccursive permettant la generation des boites
     //de sorte de creer toutes les boites terminales
-    if(ListeParticule.size()==1){
-        *Particule = ListeParticule[0] &;
-        this->masse= ListeParticule[0].masse;
-        this->centre_masse = ListeParticule[0].position;
-        this->
+    //ListepParticules est une vecteur de pointeur de Particule
+    if(ListepParticules.size()==1){
+        Particule * particule = ListepParticules[0] ;
+        this->masse= ListepParticules[0]->masse;
+        this->centre_masse = ListepParticules[0]->position;
+        delete &ListepParticules;
+    }
+    else{
+        //il y a plusieurs particule, il faut subdiviser la boite
+        subdivision();
+        //il faut maintenant remplir les listes de particules des sous boites
+        int i=0; //contient la position de la particule courante
+        for(Particule* ppart : ListepParticules){
+            for(Boite B : sousBoites){
+                if(B.contient(*ppart)) {
+                    B.PointeurParticuleDansBoite.push_back(ppart);
+                    ListepParticules.erase(ListepParticules.begin() +i);
+                    //on complete les caracteristiques de la boite
+                    B.masse += ppart->masse;
+                    double m = ppart->masse;
+                    B.centre_masse[0] += ppart->masse*(ppart->position[0]); 
+                    B.centre_masse[1] += ppart->masse*(ppart->position[1]);
+                    B.centre_masse[2] += ppart->masse*(ppart->position[2]);  
+                }
+            }//fin du parcours des sous boites
+            i++;} //  
+        //toutes les particules ont ete attribuees a une sousboite
+        //on supprime maintenenant les sous boites vides et on scinde les boites contenant plusieurs particules
+        i=0;
+        for(Boite B : sousBoites){
+            if (B.PointeurParticuleDansBoite.size() == 0 && B.particule == nullptr){
+                sousBoites.erase(sousBoites.begin() +i);
+                //B.~Boite;
+            }
+            B.generation(B.PointeurParticuleDansBoite);
+            i++;
+        }
+        //on attribut les boites soeurs et la boite fille
+        this->boite_fille = &sousBoites[0];
+        for(int j =0; j<i-1; j++){
+            sousBoites[j].boite_soeur = &sousBoites[j+1];
+        }
+        //on subdivise les sous boites si necessaire (appel reccursif)
+        for(int j =0; j<i-1; j++){
+            sousBoites[j].generation(sousBoites[j].PointeurParticuleDansBoite);
+        }
     }
 }
