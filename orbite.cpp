@@ -1,7 +1,8 @@
 #include <math.h>
 #include "particule.hpp"
 #include "Boite.hpp"
-const float G = 6.334*pow(10,-15);
+#include "constantes.hpp"
+
 
 double dist(vector<double> v1, vector<double> v2) //calcule la distance entre v1 et v2
 {
@@ -41,15 +42,20 @@ Particule MAJ_forces(Particule& parti, float epsilon, float rayon, Boite* B)
         part.force[2]+=norm*(part.position[2]-A->centre_masse[2]);
         part.force[0]+=norm*(part.position[0]-A->centre_masse[0]);
         
-        //ici on rajoute la force du a la boite
+        //ici on rajoute la force du a l'inertie du systeme
 
     }
+    //ajout de la force d'inertie
+    float angle;
+    if (part.position[0]==0){angle =0;}
+    if (part.position[0] < 0) {angle = atan(part.position[1]/part.position[0]); }
+    else {angle = atan(part.position[1]/part.position[0]); }
     return(part); //on renvoie la particule avec ses forces mises à jour
 }
 
 
 
-vector<Particule*> initialisationVitesse(vector<Particule*> LP, float dt)
+vector<Particule*> initialisationVitesse(vector<Particule*> LP)
 {
     for (Particule* part : LP)
     {
@@ -60,7 +66,7 @@ vector<Particule*> initialisationVitesse(vector<Particule*> LP, float dt)
     return LP;
 }
 
-vector<Particule*> MAJ_pos(vector<Particule*> LP, float dt)
+vector<Particule*> MAJ_pos(vector<Particule*> LP)
 {
     for (Particule* part : LP)
     {
@@ -71,7 +77,7 @@ vector<Particule*> MAJ_pos(vector<Particule*> LP, float dt)
     return LP;
 }
 
-vector<Particule*> MAJ_vitesse(vector<Particule*> LP, float dt)
+vector<Particule*> MAJ_vitesse(vector<Particule*> LP)
 {
     for (Particule* part : LP)
     {

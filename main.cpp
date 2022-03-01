@@ -2,11 +2,9 @@
 #include <stdlib.h>
 #include <cmath>
 #include <vector>
-//#include <SFML/Graphics.hpp>
 #include "boite.hpp"
 #include "particule.hpp"
-#include "orbite.cpp"
-//#include "MyWindow.hpp"
+#include "constantes.hpp"
 
 using namespace std;
 
@@ -33,7 +31,7 @@ Boite generationDuSysteme(int N){
             u_r = sqrt(pow(X2,2)+pow(X3,2)+pow(X4,2));
         }
         P.position = vector<double>(3,0.);
-        P.position[0] = r*(X2/u_r);
+        P.position[0] = r*(X2/u_r) + R;
         P.position[1] = r*(X3/u_r);
         P.position[2] = r*(X4/u_r);
         //on determine la vitesse de la particule
@@ -66,33 +64,22 @@ Boite generationDuSysteme(int N){
         centre_masse_m[0] = pow(N,-2)*X1;
         centre_masse_m[1] = pow(N,-2)*X2;
         centre_masse_m[2] = pow(N,-2)*X3;
+        
         }
     //une fois les particules crees, on creer les boites
     //creation de la boite mere (taille 1)
     vector<double> centre_m = vector<double>(3,0);
-    centre_m[0] =0.5; centre_m[1] =0.5; centre_m[2] =0.5;
-    Boite Boite_mere = Boite(1.,centre_m,1);
+    centre_m[0] = R; centre_m[1] = 0.; centre_m[2] =0.;
+    Boite Boite_mere = Boite(1., centre_m, taille);
     Boite_mere.centre_masse = centre_masse_m;
     //generation des sous boites
     Boite_mere.generation(vect_pPart);
     return Boite_mere;
 }
 
-//v0,f0,r0 -> v1/2 -> r1 -> F1 -> v3/2 ...
+//evolution du systeme
 
-//LP est le pointeur sur le vecteur des particules c'est un vector<Particule*>
-
-vector<Particule*> LP;
- 
-
-int N = LP.size();
-initialisationVitesse(LP);
-for (int i=1;i<10;i++) //nombre de dt, 
-{
-    LP = MAJ_pos(LP):
-    for (j=1;j<N;j++)
-    {
-        LP*[j] = MAJ_forces(LP*[j])
-    };
-    LP = MAJ_vitesse(LP);
-};
+void evolution(Boite B){
+    //fait passer la systeme de l'instant t à l'instant t+dt
+    
+}
