@@ -45,11 +45,16 @@ Particule MAJ_forces(Particule& parti, float epsilon, float rayon, Boite* B)
         //ici on rajoute la force du a l'inertie du systeme
 
     }
-    //ajout de la force d'inertie
+    //calcul de l'angle forme avec le centre du systeme
     float angle;
     if (part.position[0]==0){angle =0;}
     if (part.position[0] < 0) {angle = atan(part.position[1]/part.position[0]); }
-    else {angle = atan(part.position[1]/part.position[0]); }
+    else {angle = atan(part.position[1]/part.position[0]) + pi; }
+    float r = sqrt(pow(part.position[0],2)+pow(part.position[1],2));
+    //ajout de la force d'inertie
+    part.force[0] += -part.masse*r*pow(sqrt(phi_0*b)/pow(pow(R,2)+pow(b,2),0.75),2)*sin(angle);
+    part.force[1] += -part.masse*r*pow(sqrt(phi_0*b)/pow(pow(R,2)+pow(b,2),0.75),2)*cos(angle);
+
     return(part); //on renvoie la particule avec ses forces mises à jour
 }
 
