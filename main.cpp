@@ -5,11 +5,12 @@
 //#include <SFML/Graphics.hpp>
 #include "boite.hpp"
 #include "particule.hpp"
+#include "orbite.cpp"
 //#include "MyWindow.hpp"
 
 using namespace std;
 
-void generationDuSysteme(int N){
+Boite generationDuSysteme(int N){
     //N est le nombre de particule dans le systeme
     vector<Particule*> vect_pPart;
     
@@ -74,4 +75,24 @@ void generationDuSysteme(int N){
     Boite_mere.centre_masse = centre_masse_m;
     //generation des sous boites
     Boite_mere.generation(vect_pPart);
+    return Boite_mere;
 }
+
+//v0,f0,r0 -> v1/2 -> r1 -> F1 -> v3/2 ...
+
+//LP est le pointeur sur le vecteur des particules c'est un vector<Particule*>
+
+vector<Particule*> LP;
+ 
+
+int N = LP.size();
+initialisationVitesse(LP);
+for (int i=1;i<10;i++) //nombre de dt, 
+{
+    LP = MAJ_pos(LP):
+    for (j=1;j<N;j++)
+    {
+        LP*[j] = MAJ_forces(LP*[j])
+    };
+    LP = MAJ_vitesse(LP);
+};
