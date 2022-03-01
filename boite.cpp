@@ -1,6 +1,7 @@
 #include "boite.hpp"
 #include <vector>
 #include <iostream>
+
 using namespace std;
 
 //constructeurs
@@ -120,7 +121,7 @@ void Boite::generation(vector<Particule*> ListepParticules){
         //il y a plusieurs particule, il faut subdiviser la boite
         subdivision();
         //il faut maintenant remplir les listes de particules des sous boites
-        int i=0; //contient la position de la particule courante
+        int i=0; //contient la position de la particule courante dans la liste
         for(Particule* ppart : ListepParticules){
             for(Boite B : sousBoites){
                 if(B.contient(*ppart)) {
@@ -132,7 +133,11 @@ void Boite::generation(vector<Particule*> ListepParticules){
                     B.centre_masse[0] += ppart->masse*(ppart->position[0]); 
                     B.centre_masse[1] += ppart->masse*(ppart->position[1]);
                     B.centre_masse[2] += ppart->masse*(ppart->position[2]);  
+                    // il faudra ensuite diviser ces coordonnees par le nombre de particule de la boite
                 }
+                B.centre_masse[0] /= B.PointeurParticuleDansBoite.size();
+                B.centre_masse[1] /= B.PointeurParticuleDansBoite.size();
+                B.centre_masse[2] /= B.PointeurParticuleDansBoite.size();
             }//fin du parcours des sous boites
             i++;} //  
         //toutes les particules ont ete attribuees a une sousboite
@@ -156,4 +161,17 @@ void Boite::generation(vector<Particule*> ListepParticules){
             sousBoites[j].generation(sousBoites[j].PointeurParticuleDansBoite);
         }
     }
+}
+
+ostream& operator<<(ostream& os, const Boite &B){
+    os<<"Niveau : " << B.niveau << " ; Rayon : " << B.taille << '\n';
+    os<<"Centre : ("<< B.centre[0] << ", " << B.centre[1] << ", " << B.centre[2] << ") '\n";
+    os<<"Centre de masse : ("<< B.centre_masse[0] << ", " << B.centre_masse[1] << ", " << B.centre_masse[2] << ") '\n";
+    os<<"Boite fille \n";
+    if( B.boite_fille != NULL) {os<< &B.boite_fille ;}
+    else {os<<"Pas de boite fille \n";}
+    os<<"Particule :";
+    if( B.particule != NULL) {os<< &B.particule ;}
+    else {os<<"Pas de particule \n";}
+    return os;
 }
