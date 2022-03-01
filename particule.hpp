@@ -20,4 +20,6 @@ class Particule{
         Particule(vector<double>& pos, double m,vector<double>& v, vector<double>& F); //constructeur à partir des paramètres la position de la particule
 };
 
+ostream& operator<<(ostream& os, const Particule P);
+
 #endif
