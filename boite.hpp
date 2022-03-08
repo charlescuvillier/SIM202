@@ -39,6 +39,6 @@ class Boite
         void generation(vector<Particule*> ListeParticule);
 };
 
-ostream& operator<<(ostream& os, const Boite& B);
+ostream& operator<<(ostream& os, const Boite B);
 
 #endif //boite.hpp

@@ -9,12 +9,13 @@ Boite::Boite(int niv, vector<double> centr, double taill){
     this->niveau = niv;
     this->centre = centr;
     this->masse = 0;
-    this->centre_masse;
+    this->centre_masse = vector<double>(3,0.);
     this->taille = taill;
     this->particule=nullptr;
     this->boite_fille=nullptr;
     this->boite_soeur= nullptr ;
     this->PointeurParticuleDansBoite;
+    this->sousBoites = vector<Boite>.resize(9);
 }
 /*
 Boite::Boite(int niv, vector<double> centr, double mass){
@@ -69,7 +70,9 @@ void Boite::subdivision(){
     nv_centre[0] = centre[0]+taille/4;
     nv_centre[1] = centre[1]-taille/4;
     nv_centre[2] = centre[2]+taille/4;
-    sousBoites= vector<Boite>(1,Boite(niveau+1, nv_centre,taille/2));
+    this->sousBoites = vector<Boite>(1,Boite(this->niveau+1, nv_centre,this->taille/2));
+    this->boite_fille = &this->sousBoites[0];
+    cout << *this;
     //en haut a gauche derriere
     nv_centre[0] = centre[0]-taille/4;
     nv_centre[1] = centre[1]-taille/4;
@@ -120,6 +123,7 @@ void Boite::generation(vector<Particule*> ListepParticules){
     else{
         //il y a plusieurs particule, il faut subdiviser la boite
         subdivision();
+        cout << this ;
         //il faut maintenant remplir les listes de particules des sous boites
         int i=0; //contient la position de la particule courante dans la liste
         for(Particule* ppart : ListepParticules){
@@ -163,15 +167,15 @@ void Boite::generation(vector<Particule*> ListepParticules){
     }
 }
 
-ostream& operator<<(ostream& os, const Boite &B){
+ostream& operator<<(ostream& os, const Boite B){
     os<<"Niveau : " << B.niveau << " ; Rayon : " << B.taille << '\n';
-    os<<"Centre : ("<< B.centre[0] << ", " << B.centre[1] << ", " << B.centre[2] << ") '\n";
-    os<<"Centre de masse : ("<< B.centre_masse[0] << ", " << B.centre_masse[1] << ", " << B.centre_masse[2] << ") '\n";
-    os<<"Boite fille \n";
+    os<<"Centre : ("<< B.centre[0] << ", " << B.centre[1] << ", " << B.centre[2] << ") \n";
+    os<<"Centre de masse : ("<< B.centre_masse[0] << ", " << B.centre_masse[1] << ", " << B.centre_masse[2] << ") \n";
+    os<<"Boite fille :";
     if( B.boite_fille != NULL) {os<< &B.boite_fille ;}
     else {os<<"Pas de boite fille \n";}
     os<<"Particule :";
-    if( B.particule != NULL) {os<< &B.particule ;}
+    if( B.particule != NULL) {os<< *B.particule ;}
     else {os<<"Pas de particule \n";}
     return os;
 }

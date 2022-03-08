@@ -11,7 +11,6 @@ using namespace std;
 Boite generationDuSysteme(int N){
     //N est le nombre de particule dans le systeme
     vector<Particule*> vect_pPart;
-    
     vector<double> centre_masse_m = vector<double>(3,0); //centre de masse du systeme
     while(vect_pPart.size()<N){
         //on cree une particule suivant le protocole fournit dans l'enonce
@@ -58,7 +57,8 @@ Boite generationDuSysteme(int N){
         P.vitesse[0]= v_e*(X7/u_v);
         P.vitesse[1]= v_e*(X8/u_v);
         P.vitesse[2]= v_e*(X9/u_v);
-        //on ajoute la particule a la liste
+        //on ajoute la particule a la liste et on l'affiche
+        cout << "ajout de la Particule "<<vect_pPart.size()<<": \n " <<P;
         vect_pPart.push_back(&P);
         //on modifie le centre de masse du systeme
         centre_masse_m[0] = pow(N,-2)*X1;
@@ -66,9 +66,10 @@ Boite generationDuSysteme(int N){
         centre_masse_m[2] = pow(N,-2)*X3;
         
         }
+    cout << "________________ FIN DE LA GENERATION DES PARTICULES ________________ \n";
     //une fois les particules crees, on creer les boites
     //creation de la boite mere (taille 1)
-    vector<double> centre_m = vector<double>(3,0);
+    vector<double> centre_m(3,0);
     centre_m[0] = R; centre_m[1] = 0.; centre_m[2] =0.;
     Boite Boite_mere = Boite(1., centre_m, taille);
     Boite_mere.centre_masse = centre_masse_m;
@@ -76,6 +77,26 @@ Boite generationDuSysteme(int N){
     Boite_mere.generation(vect_pPart);
     return Boite_mere;
 }
+
+//test generation
+int main(){
+    /*cout <<"test  particule \n";
+    vector<double> v(3,1.);
+    vector<double> v0(3,0.);
+    Particule P = Particule(v, 10. , v0 , v0);
+    cout << P ;
+    cout << "test boite \n";
+    Boite B = Boite(2, v, 4.);
+    B.particule = &P;
+    cout << B ;
+    */
+    Boite Boite_mere = generationDuSysteme(10);
+    cout << Boite_mere;
+    return 0;
+}
+
+
+
 
 //evolution du systeme
 

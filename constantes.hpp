@@ -9,5 +9,6 @@
 #define phi_0 50000000
 #define M 100000
 #define dt 0.1
+#define pi 3.14159265
 
 #endif // constantes_hpp
