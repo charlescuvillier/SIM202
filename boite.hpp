@@ -19,7 +19,7 @@ class Boite
         Boite * boite_fille;  //pointeur vers la premiere boite fille
         Boite * boite_soeur;  //pointeur vers la premiere boite soeur
         vector<Particule*> PointeurParticuleDansBoite; //sert uniquement lors de la construction des boites
-        vector<Boite> sousBoites; //sert uniquement lors de la construction des boites
+        vector<Boite*> sousBoites; //sert uniquement lors de la construction des boites
         //constructeur de la boite
         Boite(int niveau, vector<double>, double masse);
         //destructeur
@@ -40,5 +40,5 @@ class Boite
 };
 
 ostream& operator<<(ostream& os, const Boite B);
-
+ostream& operator<<(ostream& os, const Boite* B);
 #endif //boite.hpp

@@ -15,9 +15,9 @@ Particule::Particule(vector<double>& pos, double m,vector<double>& v, vector<dou
 }
 
 ostream& operator<<(ostream& os, const Particule P){
-    os<<"Position : ("<<P.position[0]<<P.position[1]<<P.position[2]<<")"<<"\n";
-    os<<"Masse : "<< P.masse <<"\n";
-    os<<"Vitesse : ("<<P.vitesse[0]<<P.vitesse[1]<<P.vitesse[2]<<")"<<"\n";
-    os<<"Force : ("<<P.force[0]<<P.force[1]<<P.force[2]<<")"<<"\n";
+    os<<"   Position : ("<<P.position[0]<<", "<<P.position[1]<<", "<<P.position[2]<<")"<<"\n";
+    os<<"   Masse : "<< P.masse <<"\n";
+    os<<"   Vitesse : ("<<P.vitesse[0]<<", "<<P.vitesse[1]<<", "<<P.vitesse[2]<<")"<<"\n";
+    os<<"   Force : ("<<P.force[0]<<", "<<P.force[1]<<", "<<P.force[2]<<")"<<"\n";
     return os;
 }
