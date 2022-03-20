@@ -125,21 +125,6 @@ int main(){
     return 0;
 }
 
-//remplissage du fichier excel
-void ajout_coord_csv(vector<Particule*> LP){
-    // On ouvre le fichier csv, sans supprimer ce qui est déjà present
-    ofstream myfile;
-    myfile.open ("part.csv", ios::app);
-    int num = 1;
-    for (Particule* part : LP)
-    {
-        // On ajoute les coordonnees de la particule num dans le fichier csv
-        myfile << num << ";" << part->position[0]<< ";"<< part->position[1]<< ";"<< part->position[2] << "\n";
-        num = num+1;
-    }
-    myfile.close();
-}
-
 //evolution du systeme
 
 void evolution(Boite B){
