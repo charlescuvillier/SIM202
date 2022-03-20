@@ -21,7 +21,6 @@ Boite generationDuSysteme(int N){
     
     // On rajoute le numero et le temps qui vont être pris en compte dans le fichier csv
     int num = 1;
-    int T = 0;
     
     while(vect_pPart.size()<N){
         //on cree une particule suivant le protocole fournit dans l'enonce
@@ -78,7 +77,7 @@ Boite generationDuSysteme(int N){
         centre_masse_m[2] = pow(N,-2)*X3;
         
         // On ajoute les coordonnees de la particule num dans le fichier csv
-        myfile << T << ";" << num << ";" << pP->position[0]<< ";"<< pP->position[1]<< ";"<< pP->position[2] << "\n";
+        myfile << num << ";" << pP->position[0]<< ";"<< pP->position[1]<< ";"<< pP->position[2] << "\n";
         num = num+1;
         
         }
@@ -107,7 +106,7 @@ int main(){
     ofstream myfile;
     myfile.open ("part.csv");
     myfile << "Nombre de particules : " << N << "\n";
-    myfile << "Temps T;Numero particule;Position x;Position y;Postition z\n";
+    myfile << "Numero particule;Position x;Position y;Postition z\n";
     myfile.close();
     
     //_______ tests ________
@@ -126,8 +125,23 @@ int main(){
     return 0;
 }
 
-
-
+//remplissage du fichier excel
+void ajout_coord_csv(vector<Particule*> LP){
+    // On ouvre le fichier csv, sans supprimer ce qui est déjà present
+    ofstream myfile;
+    myfile.open ("part.csv", ios::app);
+    int num = 1;
+    for (Particule* part : LP)
+    {
+        part->position[1] += dt*part->vitesse[1];
+        part->position[2] += dt*part->vitesse[2];
+        part->position[0] += dt*part->vitesse[1];
+        // On ajoute les coordonnees de la particule num dans le fichier csv
+        myfile << num << ";" << part->position[0]<< ";"<< part->position[1]<< ";"<< part->position[2] << "\n";
+        num = num+1;
+    }
+    myfile.close();
+}
 
 //evolution du systeme
 
