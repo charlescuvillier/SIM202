@@ -62,8 +62,8 @@ Particule MAJ_forces(Particule& parti, float epsilon, float rayon, Boite* B)
     float R2= pow(pow(R+part.position[0],2)+pow(part.position[1],2),1/2); //sin(teta)=sqrt((R+x)**2+y**2) où R est la distance centre systeme/centre des boites
 
     //ajout des forces d'inertie 
-    part.force[0] += part.position[0]*F/R2;
-    part.force[1] += F*sqrt(1-pow(x/R2,2));*/
+    part.force[0] += part.mass*part.position[0]*F/R2;
+    part.force[1] += part.mass*F*sqrt(1-pow(x/R2,2));*/
 
     return(part); //on renvoie la particule avec ses forces mises à jour
 }
