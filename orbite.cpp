@@ -84,12 +84,24 @@ vector<Particule*> initialisationVitesse(vector<Particule*> LP)
 
 vector<Particule*> MAJ_pos(vector<Particule*> LP)
 {
+    // On ouvre le fichier csv, sans supprimer ce qui est déjà present
+    ofstream myfile;
+    myfile.open ("part.csv", ios::app);
+    int num = 1;
+
     for (Particule* part : LP)
     {
         part->position[1] += dt*part->vitesse[1];
         part->position[2] += dt*part->vitesse[2];
         part->position[0] += dt*part->vitesse[0];
+
+        // On ajoute les coordonnees de la particule dans le fichier csv
+        myfile << num << ";" << part->position[0]<< ";"<< part->position[1]<< ";"<< part->position[2] << "\n";
+        num = num+1;
     }
+        
+    myfile.close();
+
     return LP;
 }
 
