@@ -49,9 +49,8 @@ void Boite::constructionBoiteFille()
 bool Boite::contient(const Particule& P) const
 {  for(int i =0; i<3;i++)
         {
-        if (P.position[i] < centre[i]-taille/2  || P.position[i] > centre[i]+taille/2 ){ cout << "pas_contient  "; return false;}
+        if (P.position[i] < centre[i]-taille/2  || P.position[i] > centre[i]+taille/2 ){return false;}
         }
-    cout << "contient -> " ;
     return true;
 }
 //insertion de particule
@@ -194,7 +193,6 @@ void Boite::generation(vector<Particule*> ListepParticules){
             cout<<"fin de la sous generation"; // -> ne s'affiche pas : problème dans l'appel reccursif
         }
     }
-    cout << this;
 }
 
 ostream& operator<<(ostream& os, const Boite B){
