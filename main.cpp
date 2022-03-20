@@ -100,15 +100,18 @@ Boite generationDuSysteme(int N){
 
 //test generation
 int main(){
-    int N = 3;
- 
-    /*Creation du fichier excel pour stocker les differents points*/
+    //Creation d'un fichier csv permettant d'avoir les memes constantes entre les fichiers c++ et matlab
     ofstream myfile;
+    myfile.open ("const.csv");
+    myfile << "Nombre de particules;dt;Taille de la boite\n";
+    myfile << Nombre_part << ";" <<dt << ";" << taille <<"\n";
+    myfile.close();
+
+    /*Creation du fichier excel pour stocker les differents points*/
     myfile.open ("part.csv");
-    myfile << "Nombre de particules : " << N << "\n";
     myfile << "Numero particule;Position x;Position y;Postition z\n";
     myfile.close();
-    
+
     //_______ tests ________
     vector<double> v(3,1.);
     vector<double> v1(3,0.5);
@@ -121,7 +124,7 @@ int main(){
     //B.contient(P);
     //B1.contient(P);
     //ca marche
-    Boite Boite_mere = generationDuSysteme(3);
+    Boite Boite_mere = generationDuSysteme(Nombre_part);
     return 0;
 }
 
