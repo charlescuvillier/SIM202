@@ -133,9 +133,6 @@ void ajout_coord_csv(vector<Particule*> LP){
     int num = 1;
     for (Particule* part : LP)
     {
-        part->position[1] += dt*part->vitesse[1];
-        part->position[2] += dt*part->vitesse[2];
-        part->position[0] += dt*part->vitesse[1];
         // On ajoute les coordonnees de la particule num dans le fichier csv
         myfile << num << ";" << part->position[0]<< ";"<< part->position[1]<< ";"<< part->position[2] << "\n";
         num = num+1;
