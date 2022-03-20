@@ -6,7 +6,8 @@
 #include "boite.hpp"
 #include "particule.hpp"
 #include "constantes.hpp"
-#include "orbite.cpp"
+#include "orbite.hpp"
+
 using namespace std;
 
 Boite generationDuSysteme(int N){
@@ -41,9 +42,9 @@ Boite generationDuSysteme(int N){
             u_r = sqrt(pow(X2,2)+pow(X3,2)+pow(X4,2));
         }
         pP->position = vector<double>(3,0.);
-        pP->position[0] = (r*(X2/u_r)*taille) -taille/2 + R;  // petit ecart a l'enonce car on veut 
-        pP->position[1] = (r*(X3/u_r)*taille) -taille/2 + R;  // generer des coordonnees dans [-taille/2; taille/2]
-        pP->position[2] = (r*(X4/u_r)*taille) -taille/2 + R;  // et pas [0,1]
+        pP->position[0] = (r*(X2/u_r)*taille) -taille/2;  // petit ecart a l'enonce car on veut 
+        pP->position[1] = (r*(X3/u_r)*taille) -taille/2;  // generer des coordonnees dans [-taille/2; taille/2]
+        pP->position[2] = (r*(X4/u_r)*taille) -taille/2;  // et pas [0,1]
         //on determine la vitesse de la particule
         double X5 = rand()/(double)RAND_MAX;
         double X6 = rand()/(double)RAND_MAX;
@@ -98,6 +99,20 @@ Boite generationDuSysteme(int N){
     return Boite_mere;
 }
 
+//evolution du systeme
+void evolution(vector<Particule*> LP, Boite* pB){
+    //fait passer la systeme de l'instant t à l'instant t+dt
+    LP= MAJ_pos(LP);
+    for (Particule* ppart : LP){
+        ppart->force[0]=0;
+        ppart->force[1]=1;
+        ppart->force[2]=2;
+        *ppart = MAJ_forces(*ppart, pB);
+    };
+    LP=MAJ_vitesse(LP);
+}
+
+
 //test generation
 int main(){
     //Creation d'un fichier csv permettant d'avoir les memes constantes entre les fichiers c++ et matlab
@@ -124,21 +139,17 @@ int main(){
     //B.contient(P);
     //B1.contient(P);
     //ca marche
+    cout <<"saluuuut\n";
     Boite Boite_mere = generationDuSysteme(Nbp);
+    cout <<"salut\n";
     Boite_mere.PointeurParticuleDansBoite = initialisationVitesse(Boite_mere.PointeurParticuleDansBoite);  //initialisation de la vitesse v1/2
+    cout <<"yo\n";
+    for (int i=0;i++;i<10){
+        cout<< i <<"\n";
+        evolution(Boite_mere.PointeurParticuleDansBoite, &Boite_mere);
+    };
     return 0;
 }
 
 
-//evolution du systeme
-void evolution(vector<Particule*> LP, Boite* pB){
-    //fait passer la systeme de l'instant t à l'instant t+dt
-    LP= MAJ_pos(LP);
-    for (Particule* ppart : LP){
-        ppart->force[0]=0;
-        ppart->force[1]=1;
-        ppart->force[2]=2;
-        *ppart = MAJ_forces(*ppart, pB);
-    };
-    LP=MAJ_vitesse(LP);
-}
+
