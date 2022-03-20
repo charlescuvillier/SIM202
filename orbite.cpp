@@ -1,8 +1,9 @@
-#include <math.h>
+#include <fstream>
 #include "particule.hpp"
 #include "Boite.hpp"
 #include "constantes.hpp"
 
+using namespace std;
 
 double dist(vector<double> v1, vector<double> v2) //calcule la distance entre v1 et v2
 {
