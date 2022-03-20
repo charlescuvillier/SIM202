@@ -190,7 +190,7 @@ void Boite::generation(vector<Particule*> ListepParticules){
             cout<<"debut de la sous generation : ";
             //cout<< sousBoites[j]<< *sousBoites[j]->PointeurParticuleDansBoite[0];
             sousBoites[j]->generation(sousBoites[j]->PointeurParticuleDansBoite);
-            cout<<"fin de la sous generation"; // -> ne s'affiche pas : problème dans l'appel reccursif
+            cout<<"fin de la sous generation \n"; // -> ne s'affiche pas : problème dans l'appel reccursif
         }
     }
 }

@@ -6,7 +6,7 @@
 #include "boite.hpp"
 #include "particule.hpp"
 #include "constantes.hpp"
-
+#include "orbite.cpp"
 using namespace std;
 
 Boite generationDuSysteme(int N){
@@ -104,7 +104,7 @@ int main(){
     ofstream myfile;
     myfile.open ("const.csv");
     myfile << "Nombre de particules;dt;Taille de la boite\n";
-    myfile << Nombre_part << ";" <<dt << ";" << taille <<"\n";
+    myfile << Nbp << ";" <<dt << ";" << taille <<"\n";
     myfile.close();
 
     /*Creation du fichier excel pour stocker les differents points*/
@@ -124,27 +124,21 @@ int main(){
     //B.contient(P);
     //B1.contient(P);
     //ca marche
-    Boite Boite_mere = generationDuSysteme(Nombre_part);
+    Boite Boite_mere = generationDuSysteme(Nbp);
+    Boite_mere.PointeurParticuleDansBoite = initialisationVitesse(Boite_mere.PointeurParticuleDansBoite);  //initialisation de la vitesse v1/2
     return 0;
 }
 
-vector<particule* LP> = Boite_mere.PointeurParticuleDansBoite;
 
-LP= initialisationVitesse(LP);  //initialisation de la vitesse v1/2
 //evolution du systeme
-void evolution(vector<particule* LP>){
+void evolution(vector<Particule*> LP, Boite* pB){
     //fait passer la systeme de l'instant t à l'instant t+dt
-    vector<Particule*> LP = vector<Particule*>(Nbp,nullptr);
-
     LP= MAJ_pos(LP);
-    for (Particule* part : LP){
-        part.force[0]=0;
-        part.force[1]=1;
-        part.force[2]=2;
-        part = MAJ_forces(part);
+    for (Particule* ppart : LP){
+        ppart->force[0]=0;
+        ppart->force[1]=1;
+        ppart->force[2]=2;
+        *ppart = MAJ_forces(*ppart, pB);
     };
     LP=MAJ_vitesse(LP);
-
-    
 }
-

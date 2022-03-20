@@ -10,6 +10,8 @@
 #define M 100000
 #define dt 0.1
 #define pi 3.14159265
-#define Nombre_part 3
+#define Nbp 3
+#define epsilon 0.01
+#define r_lim 0.1
 
 #endif // constantes_hpp

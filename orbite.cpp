@@ -1,9 +1,14 @@
+#include <iostream>
 #include <fstream>
+#include <stdlib.h>
+#include <cmath>
+#include <vector>
+#include "boite.hpp"
 #include "particule.hpp"
-#include "Boite.hpp"
 #include "constantes.hpp"
 
 using namespace std;
+
 
 double dist(vector<double> v1, vector<double> v2) //calcule la distance entre v1 et v2
 {
@@ -13,17 +18,17 @@ double dist(vector<double> v1, vector<double> v2) //calcule la distance entre v1
 }
 
 
-Particule MAJ_forces(Particule& parti, float epsilon, float rayon, Boite* B)
+Particule MAJ_forces(Particule parti, Boite* B)
 {
     Boite* A=B;
-    Particule& part = parti;
-    if(A->boite_fille !=NULL && dist(A->centre_masse, part.position)<rayon )  //ok
+    Particule part = parti;
+    if(A->boite_fille !=NULL && dist(A->centre_masse, part.position)<r_lim )  //ok
     {
         Boite* temp = A->boite_fille;
         A = temp;
         while(A!=NULL)
         {
-            part = MAJ_forces(part, epsilon, rayon, A);
+            part = MAJ_forces(part, A);
             Boite* tempsoeur= A->boite_soeur;
             A= tempsoeur;
         }
@@ -47,7 +52,7 @@ Particule MAJ_forces(Particule& parti, float epsilon, float rayon, Boite* B)
 
     }
     //calcul de l'angle forme avec le centre du systeme
-    float angle;
+/*    float angle;
     if (part.position[0]==0){angle =0;}
     if (part.position[0] < 0) {angle = atan(part.position[1]/part.position[0]); }
     else {angle = atan(part.position[1]/part.position[0]) + pi; }
@@ -55,17 +60,17 @@ Particule MAJ_forces(Particule& parti, float epsilon, float rayon, Boite* B)
     //ajout de la force d'inertie
     part.force[0] += -part.masse*r*pow(sqrt(phi_0*b)/pow(pow(R,2)+pow(b,2),0.75),2)*sin(angle);
     part.force[1] += -part.masse*r*pow(sqrt(phi_0*b)/pow(pow(R,2)+pow(b,2),0.75),2)*cos(angle);
-
- /*
+*/
+ 
     //version 2 calcul force d'inertie
 
     float w = sqrt(phi_0*b)/pow(pow(R,2)+pow(b,2),0.75);
-    float A = R*pow(w,2) //acceleration d'inertie d'entrainement en module
-    float R2= pow(pow(R+part.position[0],2)+pow(part.position[1],2),1/2); //sin(teta)=sqrt((R+x)**2+y**2) où R est la distance centre systeme/centre des boites
+    float a = R*pow(w,2); //acceleration d'inertie d'entrainement en module
+    float Rb= pow(pow(R+part.position[0],2)+pow(part.position[1],2),1/2); //sin(teta)=sqrt((R+x)**2+y**2) où R est la distance centre systeme/centre des boites
 
     //ajout des forces d'inertie 
-    part.force[0] += part.mass*part.position[0]*A/R2;
-    part.force[1] += part.mass*A*sqrt(1-pow(x/R2,2));*/
+    part.force[0] += (part.masse*part.position[0]*a)/Rb;
+    part.force[1] += part.masse*a*sqrt(1-pow(part.position[1]/Rb,2));
 
     return(part); //on renvoie la particule avec ses forces mises à jour
 }
