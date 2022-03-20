@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <stdlib.h>
 #include <cmath>
 #include <vector>
@@ -9,10 +10,19 @@
 using namespace std;
 
 Boite generationDuSysteme(int N){
+    // On ouvre le fichier csv, sans supprimer ce qui est déjà present
+    ofstream myfile;
+    myfile.open ("part.csv", ios::app);
+    
     cout << "_______________ DEBUT DE LA GENERATION DES PARTICULES _______________ \n";
     //N est le nombre de particule dans le systeme
     vector<Particule*> vect_pPart;
     vector<double> centre_masse_m = vector<double>(3,0); //centre de masse du systeme
+    
+    // On rajoute le numero et le temps qui vont être pris en compte dans le fichier csv
+    int num = 1;
+    int T = 0;
+    
     while(vect_pPart.size()<N){
         //on cree une particule suivant le protocole fournit dans l'enonce
         vector<double> vect_nul = vector<double>(3,0.);
@@ -67,7 +77,14 @@ Boite generationDuSysteme(int N){
         centre_masse_m[1] = pow(N,-2)*X2;
         centre_masse_m[2] = pow(N,-2)*X3;
         
+        // On ajoute les coordonnees de la particule num dans le fichier csv
+        myfile << T << ";" << num << ";" << pP->position[0]<< ";"<< pP->position[1]<< ";"<< pP->position[2] << "\n";
+        num = num+1;
+        
         }
+    // On a fini de modifier le fichier csv pour cette etape
+    myfile.close();
+    
     cout << "________________ FIN DE LA GENERATION DES PARTICULES ________________ \n";
     cout << "________________  DEBUT DE LA GENERATION DES BOITES  ________________ \n";
     //une fois les particules crees, on creer les boites
@@ -84,6 +101,15 @@ Boite generationDuSysteme(int N){
 
 //test generation
 int main(){
+    int N = 3;
+ 
+    /*Creation du fichier excel pour stocker les differents points*/
+    ofstream myfile;
+    myfile.open ("part.csv");
+    myfile << "Nombre de particules : " << N << "\n";
+    myfile << "Temps T;Numero particule;Position x;Position y;Postition z\n";
+    myfile.close();
+    
     //_______ tests ________
     vector<double> v(3,1.);
     vector<double> v1(3,0.5);
