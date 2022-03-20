@@ -125,9 +125,23 @@ int main(){
     return 0;
 }
 
-//evolution du systeme
+vector<particule* LP> = ...;
 
-void evolution(Boite B){
+LP= initialisationVitesse(LP);  //initialisation de la vitesse v1/2
+//evolution du systeme
+void evolution(vector<particule* LP>){
     //fait passer la systeme de l'instant t à l'instant t+dt
+    vector<Particule*> LP = vector<Particule*>(Nbp,nullptr);
+
+    LP= MAJ_pos(LP);
+    for (Particule* part : LP){
+        part.force[0]=0;
+        part.force[1]=1;
+        part.force[2]=2;
+        part = MAJ_forces(part);
+    };
+    LP=MAJ_vitesse(LP);
+
     
 }
+
