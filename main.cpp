@@ -128,7 +128,7 @@ int main(){
     return 0;
 }
 
-vector<particule* LP> = ...;
+vector<particule* LP> = Boite_mere.PointeurParticuleDansBoite;
 
 LP= initialisationVitesse(LP);  //initialisation de la vitesse v1/2
 //evolution du systeme
