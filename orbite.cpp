@@ -55,6 +55,16 @@ Particule MAJ_forces(Particule& parti, float epsilon, float rayon, Boite* B)
     part.force[0] += -part.masse*r*pow(sqrt(phi_0*b)/pow(pow(R,2)+pow(b,2),0.75),2)*sin(angle);
     part.force[1] += -part.masse*r*pow(sqrt(phi_0*b)/pow(pow(R,2)+pow(b,2),0.75),2)*cos(angle);
 
+    /*
+    //version 2 calcul force d'inertie
+
+    float F = R*pow(w,2) //force d'inertie d'entrainement en module
+    float R2= pow(pow(R+part.position[0],2)+pow(part.position[1],2),1/2); //sin(teta)=sqrt((R+x)**2+y**2) où R est la distance centre systeme/centre des boites
+
+    //ajout des forces d'inertie 
+    part.force[0] += part.position[0]*F/R2;
+    part.force[1] += F*sqrt(1-pow(x/R2,2));*/
+
     return(part); //on renvoie la particule avec ses forces mises à jour
 }
 
