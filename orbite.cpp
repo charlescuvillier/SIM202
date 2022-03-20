@@ -70,17 +70,11 @@ Particule MAJ_forces(Particule& parti, float epsilon, float rayon, Boite* B)
     return(part); //on renvoie la particule avec ses forces mises à jour
 }
 
-vector<Particule*> vEntrainement(vector<Particule*> LP){ //enlève la vitesse d'entrainement au temps dt pour plus tard rajouter celle au temps t+dt
-    for (Particule* part : LP){
-        part->vitesse[1] -= sqrt(phi_0*b)/pow(pow(R,2)+pow(b,2),0.75)*pow(pow(R+part->position[0],2)+pow(part->position[1],2),1/2);
-    }
-}
-
 vector<Particule*> initialisationVitesse(vector<Particule*> LP)
 {
     for (Particule* part : LP)
     {
-        part->vitesse[1] += (dt*part->force[1])/(2*part->masse)+sqrt(phi_0*b)/pow(pow(R,2)+pow(b,2),0.75)*pow(pow(R+part->position[0],2)+pow(part->position[1],2),1/2); //on rajoute la vitesse d'entrainement Rw suivant le vecteur ethéta, qu'on approxime à ey
+        part->vitesse[1] += (dt*part->force[1])/(2*part->masse);
         part->vitesse[2] += (dt*part->force[2])/(2*part->masse);
         part->vitesse[0] += (dt*part->force[0])/(2*part->masse);
     }
@@ -114,7 +108,7 @@ vector<Particule*> MAJ_vitesse(vector<Particule*> LP)
 {
     for (Particule* part : LP)
     {
-        part->vitesse[1] += (dt*part->force[1]/part->masse) +sqrt(phi_0*b)/pow(pow(R,2)+pow(b,2),0.75)*pow(pow(R+part->position[0],2)+pow(part->position[1],2),1/2); //meme remarque que pour l'initialisation de la vitesse, on rajoute la vitesse d'entrainement
+        part->vitesse[1] += dt*part->force[1]/part->masse;
         part->vitesse[2] += dt*part->force[2]/part->masse;
         part->vitesse[0] += dt*part->force[0]/part->masse;
     }
