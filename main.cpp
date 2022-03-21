@@ -106,8 +106,8 @@ void evolution(vector<Particule*> LP, Boite* pB){
     LP= MAJ_pos(LP);
     for (Particule* ppart : LP){
         ppart->force[0]=0;
-        ppart->force[1]=1;
-        ppart->force[2]=2;
+        ppart->force[1]=0;
+        ppart->force[2]=0;
         *ppart = MAJ_forces(*ppart, pB);
     }
     LP=MAJ_vitesse(LP);

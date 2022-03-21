@@ -3,7 +3,7 @@
 
 //definition des constantes
 #define taille 10
-#define R 1000
+#define R 0
 #define G 1
 #define b 50
 #define phi_0 5000000
