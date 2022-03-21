@@ -131,7 +131,7 @@ int main(){
     Boite Boite_mere = generationDuSysteme(Nbp);
     //cout << Boite_mere;
     Boite_mere.PointeurParticuleDansBoite = initialisationVitesse(Boite_mere.PointeurParticuleDansBoite);  //initialisation de la vitesse v1/2
-    for (int i=0;i<100;i++){
+    for (int i=0;i<N_iter;i++){
         evolution(Boite_mere.PointeurParticuleDansBoite, &Boite_mere);
     };
     return 0;
