@@ -90,12 +90,13 @@ Boite generationDuSysteme(int N){
     //une fois les particules crees, on creer les boites
     //creation de la boite mere (taille 1)
     vector<double> centre_m(3,0);
-    centre_m[0] = R; centre_m[1] = 0.; centre_m[2] =0.;
+    centre_m[0] = 0; centre_m[1] = 0.; centre_m[2] =0.;
     Boite Boite_mere = Boite(1., centre_m, taille);
     Boite_mere.centre_masse = centre_masse_m;
     //generation des sous boites
+    Boite_mere.PointeurParticuleDansBoite = vect_pPart;
     Boite_mere.generation(vect_pPart);
-    cout << Boite_mere;
+    //cout << Boite_mere;
     return Boite_mere;
 }
 
@@ -108,7 +109,7 @@ void evolution(vector<Particule*> LP, Boite* pB){
         ppart->force[1]=1;
         ppart->force[2]=2;
         *ppart = MAJ_forces(*ppart, pB);
-    };
+    }
     LP=MAJ_vitesse(LP);
 }
 
@@ -139,13 +140,9 @@ int main(){
     //B.contient(P);
     //B1.contient(P);
     //ca marche
-    cout <<"saluuuut\n";
     Boite Boite_mere = generationDuSysteme(Nbp);
-    cout <<"salut\n";
     Boite_mere.PointeurParticuleDansBoite = initialisationVitesse(Boite_mere.PointeurParticuleDansBoite);  //initialisation de la vitesse v1/2
-    cout <<"yo\n";
-    for (int i=0;i++;i<10){
-        cout<< i <<"\n";
+    for (int i=0;i<10;i++){
         evolution(Boite_mere.PointeurParticuleDansBoite, &Boite_mere);
     };
     return 0;

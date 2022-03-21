@@ -53,6 +53,7 @@ bool Boite::contient(const Particule& P) const
         }
     return true;
 }
+
 //insertion de particule
 void Boite::insertion(Particule* ppart){
     if(!contient(*ppart))
