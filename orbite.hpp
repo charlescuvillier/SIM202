@@ -15,7 +15,7 @@ using namespace std;
 double dist(vector<double> v1, vector<double> v2) //calcule la distance entre v1 et v2
 {
     double L = pow((v2[1]-v1[1]),2)+pow((v2[2]-v1[2]),2)+pow((v2[0]-v1[0]),2);
-    L = pow(L,1/2);
+    L = pow(L,0.5);
     return(L);
 }
 
@@ -68,7 +68,7 @@ Particule MAJ_forces(Particule parti, Boite* B)
 
     float w = sqrt(phi_0*b)/pow(pow(R,2)+pow(b,2),0.75);
     float a = R*pow(w,2); //acceleration d'inertie d'entrainement en module
-    float Rb= pow(pow(part.position[0],2)+pow(R+part.position[1],2),1/2); //sin(teta)=sqrt((R+x)**2+y**2) où R est la distance centre systeme/centre des boites
+    float Rb= pow(pow(part.position[0],2)+pow(R+part.position[1],2),0.5); //sin(teta)=sqrt((R+x)**2+y**2) où R est la distance centre systeme/centre des boites
 
     //ajout des forces d'inertie 
     part.force[0] += (part.masse*part.position[0]*a)/Rb;
