@@ -8,18 +8,22 @@ Taille = C(3);
 m = readmatrix('part.csv');
 
 % On sépare ensuite chaques colonnes pour séparer les coordonnées
+num = m(:,1);
 x = m(:,2);
 y = m(:,3);
 z = m(:,4);
 
-for k = 1 : length(x)/N
+for k = 1 :N: length(x)
   % Création du nuage de points
-  scatter3([x(k) y(k) z(k)], [x(k+1) y(k+1) z(k+1)], [x(k+2) y(k+2) z(k+2)]);
+  scatter3(x(k:k+N-1), y(k:k+N-1), z(k:k+N-1));
+  axis([-Taille Taille -Taille Taille -Taille Taille])
   title( sprintf('T = %f',(k-1)*dt));
+  xlabel('x');
+  ylabel('y');
+  zlabel('z');
   %on représente la boîte racine
-  axis([-Taille/2 Taille/2 -Taille/2 Taille/2 -Taille/2 Taille/2])
   hold off
-  pause(1);
+  pause(0.2);
 end
 
 hold off
