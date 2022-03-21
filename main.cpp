@@ -128,21 +128,10 @@ int main(){
     myfile << "Numero particule;Position x;Position y;Postition z\n";
     myfile.close();
 
-    //_______ tests ________
-    vector<double> v(3,1.);
-    vector<double> v1(3,0.5);
-    vector<double> v0(3,0.);
-    Particule P = Particule(v, 10. , v0 , v0);
-    vector<Particule*> vpP = vector<Particule*>(1,&P) ;
-    Boite B = Boite(2, v, 4.);
-    Boite B1 = Boite(3, v1, 0.001 );
-    //test fonction contient
-    //B.contient(P);
-    //B1.contient(P);
-    //ca marche
     Boite Boite_mere = generationDuSysteme(Nbp);
+    //cout << Boite_mere;
     Boite_mere.PointeurParticuleDansBoite = initialisationVitesse(Boite_mere.PointeurParticuleDansBoite);  //initialisation de la vitesse v1/2
-    for (int i=0;i<10;i++){
+    for (int i=0;i<100;i++){
         evolution(Boite_mere.PointeurParticuleDansBoite, &Boite_mere);
     };
     return 0;

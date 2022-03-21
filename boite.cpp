@@ -196,42 +196,38 @@ void Boite::generation(vector<Particule*> ListepParticules){
     }
 }
 
-ostream& operator<<(ostream& os, const Boite B){
-    os<<"   Niveau : " << B.niveau << " ; Taille : " << B.taille << '\n';
-    os<<"   Centre : ("<< B.centre[0] << ", " << B.centre[1] << ", " << B.centre[2] << ") \n";
-    os<<"   Centre de masse : ("<< B.centre_masse[0] << ", " << B.centre_masse[1] << ", " << B.centre_masse[2] << ") \n";
-    os<<"   Boite fille :";
-    if( B.boite_fille != NULL) {
-        os<< *B.boite_fille <<"\n" ;
-        Boite * p = B.boite_fille;
-        while (p->boite_soeur != NULL){
-                os << p->boite_soeur;
-                p = p->boite_soeur->boite_soeur; 
-        }
-    }
-    else {os<<"Pas de boite fille \n";}
-    os<<"Particule :";
-    if( B.particule != NULL) {os<< *B.particule ;}
-    else {os<<"Pas de particule \n";}
-    return os;
-}
-
 ostream& operator<<(ostream& os, const Boite* pB){
     os<<"   Niveau : " << pB->niveau << " ; Taille : " << pB->taille << '\n';
     os<<"   Centre : ("<< pB->centre[0] << ", " << pB->centre[1] << ", " << pB->centre[2] << ") \n";
     os<<"   Centre de masse : ("<< pB->centre_masse[0] << ", " << pB->centre_masse[1] << ", " << pB->centre_masse[2] << ") \n";
     os<<"   Boite fille :";
     if( pB->boite_fille != NULL) {
-        os<< pB->boite_fille <<"\n" ;
-        Boite * p = pB->boite_fille;
-        while (p->boite_soeur != NULL){
-                os << p->boite_soeur;
-                p = p->boite_soeur->boite_soeur; 
-        }
-    }
+        os<< pB->boite_fille <<"\n" ;}
     else {os<<"Pas de boite fille \n";}
+    cout << "   Boite soeur :";
     os<<"   Particule :";
     if( pB->particule != NULL) {os<< *pB->particule ;}
     else {os<<"Pas de particule \n";}
+    if( pB->boite_soeur != NULL) {
+        os<< pB->boite_soeur <<"\n" ;}
+    else {os<<"Pas de boite soeur \n";}
+    return os;
+}
+
+ostream& operator<<(ostream& os, const Boite B){
+    os<<"   Niveau : " << B.niveau << " ; Taille : " << B.taille << '\n';
+    os<<"   Centre : ("<< B.centre[0] << ", " << B.centre[1] << ", " << B.centre[2] << ") \n";
+    os<<"   Centre de masse : ("<< B.centre_masse[0] << ", " << B.centre_masse[1] << ", " << B.centre_masse[2] << ") \n";
+    os<<"   Boite fille :";
+    if( B.boite_fille != NULL) {
+        os<< B.boite_fille <<"\n" ;}
+    else {os<<" Pas de boite fille \n";}
+    cout << "   Boite soeur :";
+    os<<"   Particule :";
+    if( B.particule != NULL) {os<< *B.particule ;}
+    else {os<<"Pas de particule \n";}
+    if( B.boite_soeur != NULL) {
+        os<< B.boite_soeur <<"\n" ;}
+    else {os<<"Pas de boite soeur \n";}
     return os;
 }

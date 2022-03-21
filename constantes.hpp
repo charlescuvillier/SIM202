@@ -2,7 +2,7 @@
 #define constantes_hpp
 
 //definition des constantes
-#define taille 5
+#define taille 10
 #define R 0
 #define G 1
 #define b 50
